@@ -1,0 +1,314 @@
+/* Variáveis CSS para facilitar a manutenção */
+:root {
+  --primary-color: #007aff;
+  --secondary-color: #f0f0f0;
+  --text-color: #333;
+  --background-color: #f5f5f7;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --transition-duration: 0.3s;
+}
+
+/* Reset e Básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Layout Principal */
+.main-container {
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+/* Sidebar com Tabs */
+.tabs {
+  width: 250px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px 10px;
+  overflow-y: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.tab-button {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 5px 0;
+  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: all var(--transition-duration);
+  font-size: 14px;
+}
+
+.tab-button:hover {
+  background-color: rgba(0, 122, 255, 0.1);
+}
+
+.tab-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Área da Galeria */
+.gallery-container {
+  flex: 1;
+  margin-left: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  position: relative;
+}
+
+.gallery {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in forwards;
+}
+
+.gallery.active {
+  display: grid;
+  opacity: 1;
+}
+
+.gallery h1 {
+  grid-column: 1 / -1;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: var(--text-color);
+}
+
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-duration);
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90vh;
+  margin: auto;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--border-radius);
+  cursor: default;
+  object-fit: contain;
+}
+
+.close {
+  position: fixed;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: none;
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--secondary-color);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+/* Animações */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .tabs {
+    width: 200px;
+  }
+  
+  .gallery-container {
+    margin-left: 200px;
+  }
+  
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .gallery-container {
+    margin-left: 0;
+    margin-top: 200px;
+    height: calc(100vh - 200px);
+  }
+  
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Media Queries para Responsividade */
+@media screen and (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .tabs {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 10px;
+    max-height: 40vh;
+  }
+
+  .tab-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .gallery {
+    padding: 10px;
+  }
+
+  .gallery img {
+    width: 100%;
+    max-width: 100%;
+    margin: 5px 0;
+  }
+
+  /* Ajustes para o modal em dispositivos móveis */
+  .modal-content {
+    width: 95%;
+    max-width: none;
+  }
+
+  .prev, .next {
+    padding: 8px;
+    font-size: 18px;
+  }
+}
+
+/* Ajustes para tablets */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .tabs {
+    width: 200px;
+  }
+
+  .content {
+    margin-left: 200px;
+  }
+
+  .gallery {
+    padding: 15px;
+  }
+
+  .gallery img {
+    width: calc(50% - 20px);
+  }
+}
+
+/* Ajustes para orientação paisagem em dispositivos móveis */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .tabs {
+    max-height: 60vh;
+  }
+
+  .gallery img {
+    width: calc(50% - 10px);
+  }
+}
